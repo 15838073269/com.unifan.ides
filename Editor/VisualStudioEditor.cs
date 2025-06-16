@@ -67,8 +67,8 @@ namespace Microsoft.Unity.VisualStudio.Editor
 			try
 			{
 				return Discovery
-					.GetVisualStudioInstallations()
-					.ToDictionary(i => FileUtility.GetAbsolutePath(i.Path), i => i);
+					.GetInstallations()
+					.ToDictionary(i => Path.GetFullPath(i.Path), i => i);
 			}
 			catch (Exception ex)
 			{
@@ -97,7 +97,7 @@ namespace Microsoft.Unity.VisualStudio.Editor
 
 		internal virtual bool TryGetVisualStudioInstallationForPath(string editorPath, bool lookupDiscoveredInstallations, out IVisualStudioInstallation installation)
 		{
-			editorPath = FileUtility.GetAbsolutePath(editorPath);
+			editorPath = Path.GetFullPath(editorPath);
 
 			// lookup for well known installations
 			if (lookupDiscoveredInstallations && _discoverInstallations.Result.TryGetValue(editorPath, out installation))
