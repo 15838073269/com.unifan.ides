@@ -33,6 +33,12 @@ namespace Microsoft.Unity.VisualStudio.Editor
 
 			foreach (var installation in AntigravityInstallation.GetInstallations())
 				yield return installation;
+
+			foreach (var installation in CodeBuddyInstallation.GetInstallations())
+				yield return installation;
+
+			foreach (var installation in CodeBuddyCNInstallation.GetInstallations())
+				yield return installation;
 		}
 
 		public static bool TryDiscoverInstallation(string editorPath, out IVisualStudioInstallation installation)
@@ -59,6 +65,13 @@ namespace Microsoft.Unity.VisualStudio.Editor
 
 				if (AntigravityInstallation.TryDiscoverInstallation(editorPath, out installation))
 					return true;
+
+				if (CodeBuddyCNInstallation.TryDiscoverInstallation(editorPath, out installation))
+					return true;
+
+				if (CodeBuddyInstallation.TryDiscoverInstallation(editorPath, out installation))
+					return true;
+
 			}
 			catch (IOException)
 			{
@@ -77,6 +90,8 @@ namespace Microsoft.Unity.VisualStudio.Editor
 			CursorInstallation.Initialize();
 			WindsurfInstallation.Initialize();
 			AntigravityInstallation.Initialize();
+			CodeBuddyInstallation.Initialize();
+			CodeBuddyCNInstallation.Initialize();
 		}
 	}
 }
