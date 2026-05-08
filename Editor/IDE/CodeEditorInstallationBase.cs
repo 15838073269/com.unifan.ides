@@ -24,7 +24,7 @@ namespace Microsoft.Unity.VisualStudio.Editor
         protected abstract string macOSAppPattern { get; }
         protected abstract string LinuxDesktopFileName { get; }
 
-        private static readonly IGenerator _generator = GeneratorFactory.GetInstance(GeneratorStyle.SDK);
+        private static IGenerator _generator;
 
         public override bool SupportsAnalyzers => true;
         public override Version LatestLanguageVersionSupported => new Version(13, 0);
@@ -48,7 +48,7 @@ namespace Microsoft.Unity.VisualStudio.Editor
             return string.IsNullOrEmpty(vstuPath) ? Array.Empty<string>() : VisualStudioInstallation.GetAnalyzers(vstuPath);
         }
 
-        public override IGenerator ProjectGenerator => _generator;
+        public override IGenerator ProjectGenerator => _generator ?? (_generator = GeneratorFactory.GetInstance(GeneratorStyle.SDK));
 
         protected bool IsCandidateForDiscovery(string path)
         {
